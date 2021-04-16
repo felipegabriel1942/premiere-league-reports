@@ -8,10 +8,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import br.com.felipegabriel.premiereleaguereports.model.Match;
+import br.com.felipegabriel.premiereleaguereports.model.Team;
 
 public class Application {
 	
@@ -25,7 +29,7 @@ public class Application {
 			e.printStackTrace();
 		}
 		
-		List<Match> matches = new ArrayList<Match>();
+		List<Match> matches = new ArrayList<>();
 		
 		// creating list of matches
 		lines.forEach(line -> {
@@ -40,6 +44,15 @@ public class Application {
 			matches.add(match);
 		});
 		
-		matches.forEach(System.out::println);
+		// creating teams
+		Set<Team> teams = new HashSet<>();
+		
+		matches.forEach(match -> {
+			Team team = new Team();
+			team.setName(match.getHome());
+			teams.add(team);
+		});
+		
+		teams.forEach(System.out::println);
 	}
 }
