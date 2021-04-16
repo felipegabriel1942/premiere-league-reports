@@ -1,33 +1,22 @@
 package br.com.felipegabriel.premiereleaguereports;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Collectors;
 
+import br.com.felipegabriel.premiereleaguereports.model.File;
 import br.com.felipegabriel.premiereleaguereports.model.Match;
 import br.com.felipegabriel.premiereleaguereports.model.Team;
 
 public class Application {
 	
 	public static void main(String[] args) {
-		List<String> lines = Collections.emptyList();
-		
-		// reading file
-		try {
-			lines = Files.readAllLines(Paths.get("src/resources/eng.1.txt"), StandardCharsets.UTF_8);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			
+		List<String> lines = new File().readFile("src/resources/eng.1.txt");
 		
 		List<Match> matches = new ArrayList<>();
 		
@@ -52,6 +41,23 @@ public class Application {
 			team.setName(match.getHome());
 			teams.add(team);
 		});
+		
+		// calculating results
+		teams.forEach(team ->
+			matches.forEach(match -> {
+				if (team.getName().equals(match.getHome())) {
+					team.setGoalsFor(team.getGoalsFor() + match.getHomeScore());
+					team.setGoalsAgainst(team.getGoalsAgainst() + match.getVisitorScore());
+				}
+				
+				if (team.getName().equals(match.getVisitor())) {
+					team.setGoalsFor(team.getGoalsFor() + match.getVisitorScore());
+					team.setGoalsAgainst(team.getGoalsAgainst() + match.getHomeScore());
+				}
+				
+				team.setGoalsDifference(team.getGoalsFor() - team.getGoalsAgainst());
+			})
+		);
 		
 		teams.forEach(System.out::println);
 	}
