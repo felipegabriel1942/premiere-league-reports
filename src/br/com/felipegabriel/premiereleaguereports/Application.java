@@ -1,14 +1,7 @@
 package br.com.felipegabriel.premiereleaguereports;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import br.com.felipegabriel.premiereleaguereports.model.File;
@@ -25,7 +18,7 @@ public class Application {
 		List<String> lines = new File().readFile("src/resources/eng.1.txt");
 		
 		// creating list of matches
-		List<Match> matches = new ArrayList<>();
+		List<Match> matches = new Match().createMatches(lines);
 		
 		// creating teams
 		Set<Team> teams = new HashSet<>();
@@ -71,7 +64,7 @@ public class Application {
 //			e.printStackTrace();
 //		}
 //		
-//		teams.forEach(System.out::println);
+		teams.forEach(System.out::println);
 	}
 	
 	public static String createRow(String value) {
