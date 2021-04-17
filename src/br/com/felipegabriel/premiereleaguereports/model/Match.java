@@ -1,9 +1,9 @@
 package br.com.felipegabriel.premiereleaguereports.model;
 
+import static br.com.felipegabriel.premiereleaguereports.utils.CustomDateUtils.createDate;
+
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ public class Match {
 	private int homeScore;
 	private int visitorScore;
 	
-	public List<Match> createMatches(List<String> lines) {		
+	public List<Match> createMatches(List<String> lines) {	
 		return lines.stream()
 				.map(this::createMatch)
 				.collect(Collectors.toList());
@@ -42,11 +42,7 @@ public class Match {
 				.visitorScore(createVisitorScore(splittedLine[3]))
 				.build();
 	}
-	
-	public LocalDate createDate(String string) {
-		return LocalDate.parse(string, DateTimeFormatter.ofPattern("E MMM d yyyy", Locale.US));
-	}
-	
+		
 	public int createHomeScore(String string) {
 		return Integer.parseInt(string.split("-")[0]);
 	}

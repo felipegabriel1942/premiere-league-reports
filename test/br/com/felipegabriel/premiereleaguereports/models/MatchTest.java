@@ -2,16 +2,14 @@ package br.com.felipegabriel.premiereleaguereports.models;
 
 import static org.junit.Assert.assertTrue;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import br.com.felipegabriel.premiereleaguereports.model.Match;
+import br.com.felipegabriel.premiereleaguereports.utils.CustomDateUtils;
 
 public class MatchTest {
 	
@@ -34,6 +32,18 @@ public class MatchTest {
 		assertTrue(matches.get(0).getHomeScore() == 4);
 		assertTrue(matches.get(0).getVisitorScore() == 1);
 		assertTrue(matches.get(0).getRound() == 1);
-		assertTrue(matches.get(0).getDate().isEqual(LocalDate.parse("Fri Aug 9 2019", DateTimeFormatter.ofPattern("E MMM d yyyy", Locale.US))));
+		assertTrue(matches.get(0).getDate().isEqual(CustomDateUtils.createDate("Fri Aug 9 2019")));
+	}
+	
+	
+	public static Match createMatchMock() {
+		return Match.builder()
+				.round(1)
+				.date(CustomDateUtils.createDate("Fri Aug 9 2019"))
+				.home("Liverpool FC")
+				.visitor("Norwich City FC")
+				.homeScore(4)
+				.visitorScore(1)
+				.build();
 	}
 }
