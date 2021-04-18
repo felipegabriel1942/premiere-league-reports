@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import br.com.felipegabriel.premiereleaguereports.model.Match;
 import br.com.felipegabriel.premiereleaguereports.model.Team;
-import br.com.felipegabriel.premiereleaguereports.utils.CustomDateUtils;
 
 public class TeamTest {
 	
@@ -21,7 +20,7 @@ public class TeamTest {
 	@BeforeEach
 	void beforeEach() {
 		team = new Team();
-		matches.add(MatchTest.createMatchMock());
+		matches.add(MatchTest.createMockMatch());
 	}
 	
 	@Test
@@ -35,17 +34,13 @@ public class TeamTest {
 		assertTrue(teams.get(0).getGoalsDifference() == 3);
 	}
 	
-//	@Test
-//	void calculateTeamsResultTest() {
-//		List<Team> teams = team.createTeams(matches);
-//		
-//		teams = team.calculateTeamsResults(teams, matches);
-//		
-//		assertTrue(!teams.isEmpty());
-//		assertTrue(teams.get(0).getPoints() == 3);
-//		assertTrue(teams.get(0).getGoalsFor() == 4);
-//		assertTrue(teams.get(0).getGoalsAgainst() == 1);
-//		assertTrue(teams.get(0).getGoalsDifference() == 3);
-//	}
-
+	public static Team createMockTeam() {
+		return Team.builder()
+				.name("Liverpool FC")
+				.goalsFor(4)
+				.goalsAgainst(2)
+				.goalsDifference(2)
+				.points(3)
+				.build();
+	}
 }

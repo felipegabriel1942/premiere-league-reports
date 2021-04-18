@@ -1,9 +1,13 @@
 package br.com.felipegabriel.premiereleaguereports;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import br.com.felipegabriel.premiereleaguereports.model.File;
 import br.com.felipegabriel.premiereleaguereports.model.Match;
+import br.com.felipegabriel.premiereleaguereports.model.Report;
 import br.com.felipegabriel.premiereleaguereports.model.Team;
 
 public class Application {
@@ -14,31 +18,17 @@ public class Application {
 		List<Match> matches = new Match().createMatches(lines);
 
 		List<Team> teams =  new Team().createTeams(matches);
-
-//		teams = team.calculateTeamsResults(teams, matches);
-
-		// creating report file
-//	    try {
-//			PrintWriter writer = new PrintWriter("C:\\Users\\pinhe\\Documents\\teste.html", "UTF-8");
-//			
-//			StringBuilder report = new StringBuilder();
-//			report.append(createRow("Relatório temporada 2019 / 2020"));
-//			report.append("<hr/>");
-//			
-//			teams.forEach(team -> report.append(createRow(team.getName())));
-//			
-//			writer.println(report);
-//			writer.close();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
-//		
-		teams.forEach(System.out::println);
-	}
-
-	public static String createRow(String value) {
-		return "<p style='color: green;'>" + value + "</p>";
+		
+		String report = new Report().createReport(teams);
+		
+	    try {
+			PrintWriter writer = new PrintWriter("C:\\Users\\pinhe\\Documents\\premiere-league-report.html", "UTF-8");
+			writer.println(report);
+			writer.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 }

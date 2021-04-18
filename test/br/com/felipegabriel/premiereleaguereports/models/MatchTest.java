@@ -36,7 +36,7 @@ public class MatchTest {
 	}
 	
 	
-	public static Match createMatchMock() {
+	public static Match createMockMatch() {
 		return Match.builder()
 				.round(1)
 				.date(CustomDateUtils.createDate("Fri Aug 9 2019"))
